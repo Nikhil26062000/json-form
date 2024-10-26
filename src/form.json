@@ -1,0 +1,89 @@
+[
+  {
+    "sectionTitle": "Preferences",
+    "fields": [
+      {
+        "name": "experienceType",
+        "label": "Experience Type",
+        "type": "select",
+        "options": [
+          { "label": "Frontend", "value": "frontend" },
+          { "label": "Backend", "value": "backend" },
+          { "label": "Full Stack", "value": "fullstack" }
+        ],
+        "required": true
+      },
+      {
+        "name": "frontendFramework",
+        "label": "Frontend Framework",
+        "type": "text",
+        "placeholder": "Specify framework",
+        "visibility": { "field": "experienceType", "value": "frontend" }
+      },
+      {
+        "name": "frontendTools",
+        "label": "Frontend Tools",
+        "type": "text",
+        "placeholder": "Specify tools",
+        "visibility": { "field": "experienceType", "value": "frontend" }
+      },
+      {
+        "name": "backendLanguage",
+        "label": "Backend Language",
+        "type": "text",
+        "placeholder": "Specify language",
+        "visibility": { "field": "experienceType", "value": "backend" }
+      },
+      {
+        "name": "database",
+        "label": "Database",
+        "type": "text",
+        "placeholder": "Specify database",
+        "visibility": { "field": "experienceType", "value": "backend" }
+      },
+      {
+        "name": "devOpsTools",
+        "label": "DevOps Tools",
+        "type": "text",
+        "placeholder": "Specify tools",
+        "visibility": { "field": "experienceType", "value": "backend" }
+      },
+      {
+        "name": "projectType",
+        "label": "Project Type",
+        "type": "text",
+        "placeholder": "Describe your project",
+        "visibility": { "field": "experienceType", "value": "fullstack" }
+      },
+      {
+        "name": "languages",
+        "label": "Languages",
+        "type": "checkbox",
+        "options": [
+          { "label": "JavaScript", "value": "javascript" },
+          { "label": "Python", "value": "python" },
+          { "label": "Java", "value": "java" }
+        ],
+        "required": false
+      },
+      {
+        "name": "preferredIDE",
+        "label": "Preferred IDE",
+        "type": "radio",
+        "options": [
+          { "label": "VSCode", "value": "vscode" },
+          { "label": "IntelliJ", "value": "intellij" },
+          { "label": "Eclipse", "value": "eclipse" }
+        ],
+        "required": true
+      },
+      {
+        "name": "projectDeadline",
+        "label": "Project Deadline",
+        "type": "date",
+        "placeholder": "Select a date",
+        "required": true
+      }
+    ]
+  }
+]
