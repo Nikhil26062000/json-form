@@ -83,6 +83,15 @@
         "type": "date",
         "placeholder": "Select a date",
         "required": true
+      },
+      {
+        "name": "projectName",
+        "label": "Project Name",
+        "type": "text",
+        "placeholder": "Enter project name",
+        "required": true,
+        "onKeyUp": "handleProjectNameKeyUp",
+        "onBlur": "handleProjectNameBlur"
       }
     ]
   }
