@@ -95,6 +95,17 @@
           "onBlur": "handleProjectNameBlur",
           "onFocus": "handleProjectNameFocus"
         }
+      },
+      {
+        "name": "projectPassword",
+        "label": "Project Password",
+        "type": "password",
+        "placeholder": "Enter project password",
+        "required": true,
+        "events": {
+          "onMouseOver": "handlePasswordMouseOver",
+          "onMouseOut": "handlePasswordMouseOut"
+        }
       }
     ]
   }

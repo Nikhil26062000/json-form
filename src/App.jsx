@@ -4,7 +4,7 @@ import form_schema from "./form.json";
 const DynamicFormComponent = ({ schema }) => {
   const [formData, setFormData] = useState({});
 
-  // Define event handlers in a single object
+  // Define event handlers
   const eventHandlers = {
     onKeyUp: {
       handleProjectNameKeyUp: (e) => {
@@ -19,6 +19,16 @@ const DynamicFormComponent = ({ schema }) => {
     onFocus: {
       handleProjectNameFocus: (e) => {
         console.log("Focus event triggered in project name input");
+      },
+    },
+    onMouseOver: {
+      handlePasswordMouseOver: (e) => {
+        console.log("Mouse over event on project password input");
+      },
+    },
+    onMouseOut: {
+      handlePasswordMouseOut: (e) => {
+        console.log("Mouse out event on project password input");
       },
     },
   };
@@ -46,13 +56,15 @@ const DynamicFormComponent = ({ schema }) => {
 
   return (
     <form>
-      {form_schema?.map((section, index) => (
+      {form_schema.map((section, index) => (
         <div key={index}>
           <h2>{section.sectionTitle}</h2>
           {section.fields.map((field) => (
-            <div key={field.name} className="mb-4">
+            <div key={field.name}>
               <label>{field.label}</label>
-              {field.type === "select" ? (
+
+              {/* Select Field */}
+              {field.type === "select" && (
                 <select
                   name={field.name}
                   value={formData[field.name] || ""}
@@ -61,36 +73,48 @@ const DynamicFormComponent = ({ schema }) => {
                   }
                   required={field.required}
                 >
-                  <option value="">Select {field.label}</option>
                   {field.options.map((option) => (
                     <option key={option.value} value={option.value}>
                       {option.label}
                     </option>
                   ))}
                 </select>
-              ) : field.type === "checkbox" ? (
+              )}
+
+              {/* Checkbox Field */}
+              {field.type === "checkbox" &&
                 field.options.map((option) => (
                   <label key={option.value}>
                     <input
                       type="checkbox"
                       name={field.name}
                       value={option.value}
-                      checked={(formData[field.name] || []).includes(
-                        option.value
-                      )}
+                      checked={
+                        Array.isArray(formData[field.name]) &&
+                        formData[field.name].includes(option.value)
+                      }
                       onChange={(e) => {
-                        const newValue = e.target.checked
-                          ? [...(formData[field.name] || []), option.value]
-                          : formData[field.name].filter(
-                              (val) => val !== option.value
-                            );
+                        const newValue = Array.isArray(formData[field.name])
+                          ? formData[field.name]
+                          : [];
+                        if (e.target.checked) {
+                          newValue.push(option.value);
+                        } else {
+                          const index = newValue.indexOf(option.value);
+                          if (index > -1) {
+                            newValue.splice(index, 1);
+                          }
+                        }
                         handleInputChange(field.name, newValue);
                       }}
+                      required={field.required}
                     />
                     {option.label}
                   </label>
-                ))
-              ) : field.type === "radio" ? (
+                ))}
+
+              {/* Radio Field */}
+              {field.type === "radio" &&
                 field.options.map((option) => (
                   <label key={option.value}>
                     <input
@@ -99,14 +123,18 @@ const DynamicFormComponent = ({ schema }) => {
                       value={option.value}
                       checked={formData[field.name] === option.value}
                       onChange={(e) =>
-                        handleInputChange(field.name, option.value)
+                        handleInputChange(field.name, e.target.value)
                       }
                       required={field.required}
                     />
                     {option.label}
                   </label>
-                ))
-              ) : (
+                ))}
+
+              {/* Date, Password, and Text Fields */}
+              {(field.type === "date" ||
+                field.type === "password" ||
+                field.type === "text") && (
                 <input
                   type={field.type}
                   name={field.name}
