@@ -90,8 +90,11 @@
         "type": "text",
         "placeholder": "Enter project name",
         "required": true,
-        "onKeyUp": "handleProjectNameKeyUp",
-        "onBlur": "handleProjectNameBlur"
+        "events": {
+          "onKeyUp": "handleProjectNameKeyUp",
+          "onBlur": "handleProjectNameBlur",
+          "onFocus": "handleProjectNameFocus"
+        }
       }
     ]
   }
