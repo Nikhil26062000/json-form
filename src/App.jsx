@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import form_schema from "./form.json";
-import { useEffect } from "react";
 
 const DynamicFormComponent = ({ schema }) => {
   const [formData, setFormData] = useState({ experienceType: "frontend" });
 
   useEffect(() => {
     console.log(formData);
-  }, []);
+  }, [formData]);
 
   // Define event handlers
   const eventHandlers = {
@@ -40,25 +39,22 @@ const DynamicFormComponent = ({ schema }) => {
 
   // Handle input change
   const handleInputChange = (fieldName, value) => {
-    console.log("fieldName :", fieldName);
-    console.log("value :", value);
     setFormData((prevData) => ({
       ...prevData,
       [fieldName]: value,
     }));
-    console.log(formData);
   };
 
-  // Check visibility of a field based on selected experience type
+  // Check visibility of a field based on selected experience type or age range
   const isFieldVisible = (field) => {
     if (field.visibility) {
-      const { field: visibilityField, value } = field.visibility;
-      return formData[visibilityField] === value;
-      // if (value.includes(formData[visibilityField])) {
-      //   return true;
-      // } else {
-      //   return false;
-      // }
+      const { field: visibilityField, value, min, max } = field.visibility;
+      if (value !== undefined) {
+        return formData[visibilityField] === value;
+      } else if (min !== undefined && max !== undefined) {
+        const currentFieldValue = formData[visibilityField];
+        return currentFieldValue >= min && currentFieldValue <= max;
+      }
     }
     return true; // Default to visible if no visibility rule
   };
@@ -87,6 +83,24 @@ const DynamicFormComponent = ({ schema }) => {
               isFieldVisible(field) && (
                 <div key={field.name}>
                   <label>{field.label}</label>
+
+                  {/* Range Field */}
+                  {field.type === "range" && (
+                    <input
+                      type="range"
+                      name={field.name}
+                      min={field.min}
+                      max={field.max}
+                      value={formData[field.name] || field.min}
+                      onChange={(e) =>
+                        handleInputChange(
+                          field.name,
+                          parseInt(e.target.value, 10)
+                        )
+                      }
+                      style={field.styles}
+                    />
+                  )}
 
                   {/* Select Field */}
                   {field.type === "select" && (

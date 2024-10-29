@@ -1,5 +1,47 @@
 [
   {
+    "sectionTitle": "User Information",
+    "fields": [
+      {
+        "name": "age",
+        "label": "Age",
+        "type": "range",
+        "min": 0,
+        "max": 50,
+        "styles": {
+          "marginBottom": "10px",
+          "width": "100%"
+        }
+      },
+      {
+        "name": "occupation",
+        "label": "What’s your occupation?",
+        "type": "text",
+        "visibility": { "field": "age", "min": 20, "max": 30 },
+        "styles": {
+          "padding": "8px",
+          "border": "1px solid #ddd",
+          "borderRadius": "4px",
+          "width": "100%",
+          "marginBottom": "10px"
+        }
+      },
+      {
+        "name": "hobby",
+        "label": "What’s your favorite hobby?",
+        "type": "text",
+        "visibility": { "field": "age", "min": 10, "max": 19 },
+        "styles": {
+          "padding": "8px",
+          "border": "1px solid #ddd",
+          "borderRadius": "4px",
+          "width": "100%",
+          "marginBottom": "10px"
+        }
+      }
+    ]
+  },
+  {
     "sectionTitle": "Preferences",
     "fields": [
       {
