@@ -19,7 +19,7 @@ const DynamicForm = ({ config }) => {
         props[eventKey] = field.events[eventKey];
       });
     }
-
+    console.log(props);
     return props;
   };
 
